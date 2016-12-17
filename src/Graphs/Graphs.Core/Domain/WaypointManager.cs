@@ -28,5 +28,14 @@ namespace Graphs.Core.Domain
                 .OrderBy(x => x.Weight)
                 .FirstOrDefault();
         }
+
+        public Connector[] GetConnectors(Waypoint point)
+        {
+            return Connectors
+                .Where(x =>
+                    (x.PointAName == point.Name && !x.PointB.Blocked)
+                    || (x.PointBName == point.Name && !x.PointA.Blocked))
+                .ToArray();
+        }
     }
 }

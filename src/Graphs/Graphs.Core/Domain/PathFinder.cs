@@ -48,10 +48,10 @@ namespace Graphs.Core.Domain
 
         private void update(WaypointManager manager, SearchWaypoint point)
         {
-            var neighbors = manager.Connectors.Where(x => x.PointA.Name == point.Name || x.PointB.Name == point.Name);
-            foreach (var connector in neighbors)
+            var connectors = manager.GetConnectors(point);
+            foreach (var connector in connectors)
             {
-                var p = connector.PointA.Name == point.Name ? connector.PointB : connector.PointA;
+                var p = connector.PointAName == point.Name ? connector.PointB : connector.PointA;
                 var next = manager.Search[p.Name];
 
                 if (next.Closed)

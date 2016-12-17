@@ -17,12 +17,16 @@ namespace Graphs.Core.Domain
             }
 
             PointA = pointA;
+            PointAName = pointA.Name;
             PointB = pointB;
+            PointBName = pointB.Name;
             Weight = weight;
         }
 
         public Waypoint PointA { get; }
+        public string PointAName { get; }
         public Waypoint PointB { get; }
+        public string PointBName { get; }
         public double Weight { get; }
     }
 }

@@ -29,5 +29,22 @@ namespace Graphs.Tests
             Assert.AreEqual(B, result[1]);
             Assert.AreEqual(D, result[2]);
         }
+
+        [Test]
+        public void Find_PathBlocked_NullResult()
+        {
+            var A = new Waypoint("A");
+            var B = new Waypoint("B", true);
+            var C = new Waypoint("C");
+
+            var A_B = new Connector(A, B, 2);
+            var B_C = new Connector(B, C, 1);
+            var connectors = new[] { A_B, B_C };
+
+            var finder = new PathFinder();
+            var result = finder.Find(connectors, A, C);
+
+            Assert.IsNull(result);
+        }
     }
 }
