@@ -21,6 +21,14 @@ namespace Graphs.Core.Domain
         public IDictionary<string, Waypoint> Original { get; private set; }
         public IDictionary<string, SearchWaypoint> Search { get; private set; }
 
+        public void ClearPreviousRun()
+        {
+            foreach (var searchWaypoint in Search)
+            {
+                searchWaypoint.Value.Clear();
+            }
+        }
+
         public SearchWaypoint GetNext()
         {
             return Search.Values

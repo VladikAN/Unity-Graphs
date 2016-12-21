@@ -19,6 +19,13 @@
             Best = point;
         }
 
+        public void Clear()
+        {
+            Weight = -1;
+            Best = null;
+            Closed = false;
+        }
+
         public void Close()
         {
             Closed = true;

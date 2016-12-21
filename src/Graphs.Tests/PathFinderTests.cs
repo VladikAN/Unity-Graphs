@@ -20,8 +20,8 @@ namespace Graphs.Tests
             var C_D = new Connector(C, D, 3);
             var connectors = new[] { A_B, A_C, B_D, C_D };
 
-            var finder = new PathFinder();
-            var result = finder.Find(connectors, A, D);
+            var finder = new PathFinder(connectors);
+            var result = finder.Find(A, D);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(3, result.Length);
@@ -41,8 +41,8 @@ namespace Graphs.Tests
             var B_C = new Connector(B, C, 1);
             var connectors = new[] { A_B, B_C };
 
-            var finder = new PathFinder();
-            var result = finder.Find(connectors, A, C);
+            var finder = new PathFinder(connectors);
+            var result = finder.Find(A, C);
 
             Assert.IsNull(result);
         }

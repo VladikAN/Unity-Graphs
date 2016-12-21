@@ -1,28 +1,40 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Graphs.Core.Domain
 {
     public class PathFinder
     {
-        public Waypoint[] Find(Connector[] connectors, Waypoint start, Waypoint goal)
+        private WaypointManager _manager;
+
+        public PathFinder(Connector[] connectors)
+        {
+            Update(connectors);
+        }
+
+        public void Update(Connector[] connectors)
         {
             if (connectors == null || connectors.Length == 0)
             {
-                return null;
+                throw new Exception("Connectors cannot be empty");
             }
 
-            var manager = new WaypointManager(connectors);
-            var startPoint = manager.Search[start.Name];
-            var goalPoint = manager.Search[goal.Name];
+            _manager = new WaypointManager(connectors);
+        }
+
+        public Waypoint[] Find(Waypoint start, Waypoint goal)
+        {
+            _manager.ClearPreviousRun();
+            var startPoint = _manager.Search[start.Name];
+            var goalPoint = _manager.Search[goal.Name];
 
             var current = startPoint;
             while (current != goalPoint)
             {
                 current.Close();
-                update(manager, current);
+                UpdatePoint(current);
 
-                current = manager.GetNext();
+                current = _manager.GetNext();
                 if (current == null)
                 {
                     break;
@@ -35,7 +47,7 @@ namespace Graphs.Core.Domain
                 var p = goalPoint;
                 while (p != null)
                 {
-                    result.Add(manager.Original[p.Name]);
+                    result.Add(_manager.Original[p.Name]);
                     p = p.Best;
                 }
 
@@ -46,13 +58,13 @@ namespace Graphs.Core.Domain
             return null;
         }
 
-        private void update(WaypointManager manager, SearchWaypoint point)
+        private void UpdatePoint(SearchWaypoint point)
         {
-            var connectors = manager.GetConnectors(point);
+            var connectors = _manager.GetConnectors(point);
             foreach (var connector in connectors)
             {
                 var p = connector.PointAName == point.Name ? connector.PointB : connector.PointA;
-                var next = manager.Search[p.Name];
+                var next = _manager.Search[p.Name];
 
                 if (next.Closed)
                 {
