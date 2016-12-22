@@ -14,22 +14,22 @@ namespace Graphs.Core.Domain
                 .Distinct()
                 .ToDictionary(x => x.Name, x => x);
 
-            Search = Original.ToDictionary(x => x.Key, x => new SearchWaypoint(x.Value));
+            Search = Original.ToDictionary(x => x.Key, x => new TempWaypoint(x.Value));
         }
 
         public Connector[] Connectors { get; private set; }
         public IDictionary<string, Waypoint> Original { get; private set; }
-        public IDictionary<string, SearchWaypoint> Search { get; private set; }
+        public IDictionary<string, TempWaypoint> Search { get; private set; }
 
-        public void ClearPreviousRun()
+        public void RefreshAll()
         {
             foreach (var searchWaypoint in Search)
             {
-                searchWaypoint.Value.Clear();
+                searchWaypoint.Value.Refresh();
             }
         }
 
-        public SearchWaypoint GetNext()
+        public TempWaypoint GetNextOpen()
         {
             return Search.Values
                 .Where(x => !x.Closed && x.Weight >= 0)

@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="Domain\Connector.cs" />
     <Compile Include="Domain\PathFinder.cs" />
-    <Compile Include="Domain\SearchWaypoint.cs" />
+    <Compile Include="Domain\TempWaypoint.cs" />
     <Compile Include="Domain\Waypoint.cs" />
     <Compile Include="Domain\WaypointManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -24,17 +24,17 @@ namespace Graphs.Core.Domain
 
         public Waypoint[] Find(Waypoint start, Waypoint goal)
         {
-            _manager.ClearPreviousRun();
+            _manager.RefreshAll();
             var startPoint = _manager.Search[start.Name];
             var goalPoint = _manager.Search[goal.Name];
 
             var current = startPoint;
             while (current != goalPoint)
             {
-                current.Close();
-                UpdatePoint(current);
+                current.CloseForUpdates();
+                MakeStep(current);
 
-                current = _manager.GetNext();
+                current = _manager.GetNextOpen();
                 if (current == null)
                 {
                     break;
@@ -58,7 +58,7 @@ namespace Graphs.Core.Domain
             return null;
         }
 
-        private void UpdatePoint(SearchWaypoint point)
+        private void MakeStep(TempWaypoint point)
         {
             var connectors = _manager.GetConnectors(point);
             foreach (var connector in connectors)
@@ -74,7 +74,7 @@ namespace Graphs.Core.Domain
                 var weight = point.Weight + connector.Weight;
                 if (next.Weight < 0 || next.Weight > weight)
                 {
-                    next.SetBest(point, weight);
+                    next.SetBestNeighbor(point, weight);
                 }
             }
         }

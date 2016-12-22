@@ -1,8 +1,8 @@
 ﻿namespace Graphs.Core.Domain
 {
-    public class SearchWaypoint : Waypoint
+    public class TempWaypoint : Waypoint
     {
-        public SearchWaypoint(Waypoint waypoint) : base(waypoint.Name)
+        public TempWaypoint(Waypoint waypoint) : base(waypoint.Name)
         {
             Weight = -1;
             Best = null;
@@ -10,23 +10,23 @@
         }
 
         public double Weight { get; private set; }
-        public SearchWaypoint Best { get; private set; }
+        public TempWaypoint Best { get; private set; }
         public bool Closed { get; private set; }
 
-        public void SetBest(SearchWaypoint point, double weight)
+        public void SetBestNeighbor(TempWaypoint point, double weight)
         {
             Weight = weight;
             Best = point;
         }
 
-        public void Clear()
+        public void Refresh()
         {
             Weight = -1;
             Best = null;
             Closed = false;
         }
 
-        public void Close()
+        public void CloseForUpdates()
         {
             Closed = true;
         }

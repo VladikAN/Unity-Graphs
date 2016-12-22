@@ -29,7 +29,7 @@ namespace Graphs.Core.Domain
         public string PointBName { get; }
         public double Weight { get; }
 
-        public bool CheckNames(string pointA, string pointB)
+        public bool Equals(string pointA, string pointB)
         {
             return (PointAName == pointA && PointBName == pointB) || (PointAName == pointB && PointBName == pointA);
         }
