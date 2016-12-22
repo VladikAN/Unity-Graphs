@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Graphs.Core.Domain
+namespace Graphs.Domain
 {
     public class WaypointManager
     {

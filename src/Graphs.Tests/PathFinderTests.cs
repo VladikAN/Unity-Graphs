@@ -1,4 +1,4 @@
-﻿using Graphs.Core.Domain;
+﻿using Graphs.Domain;
 using NUnit.Framework;
 
 namespace Graphs.Tests
@@ -31,6 +31,27 @@ namespace Graphs.Tests
         }
 
         [Test]
+        public void Find_RunMultipleTimes_SameResult()
+        {
+            var A = new Waypoint("A");
+            var B = new Waypoint("B");
+            var C = new Waypoint("C");
+
+            var A_B = new Connector(A, B, 2);
+            var B_C = new Connector(A, C, 1);
+            var connectors = new[] { A_B, B_C };
+
+            var finder = new PathFinder(connectors);
+            var result1 = finder.Find(A, C);
+            var result2 = finder.Find(A, C);
+            var result3 = finder.Find(A, C);
+
+            Assert.IsNotNull(result1);
+            Assert.AreEqual(result1, result2);
+            Assert.AreEqual(result2, result3);
+        }
+
+        [Test]
         public void Find_PathBlocked_NullResult()
         {
             var A = new Waypoint("A");
@@ -45,6 +66,27 @@ namespace Graphs.Tests
             var result = finder.Find(A, C);
 
             Assert.IsNull(result);
+        }
+
+        [Test]
+        public void Update_NewConnectors_Updated()
+        {
+            var A = new Waypoint("A");
+            var B = new Waypoint("B");
+            var C = new Waypoint("C");
+            var A_B = new Connector(A, B, 2);
+            var B_C = new Connector(B, C, 2);
+
+            var finder = new PathFinder(new[] { A_B });
+            finder.Update(new[] { A_B, B_C });
+
+            var result = finder.Find(A, C);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Length);
+            Assert.AreEqual(A, result[0]);
+            Assert.AreEqual(B, result[1]);
+            Assert.AreEqual(C, result[2]);
         }
     }
 }

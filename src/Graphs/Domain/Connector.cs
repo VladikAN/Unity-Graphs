@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Graphs.Core.Domain
+namespace Graphs.Domain
 {
     public class Connector
     {

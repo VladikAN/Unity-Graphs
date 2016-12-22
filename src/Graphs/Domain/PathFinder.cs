@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Graphs.Core.Domain
+namespace Graphs.Domain
 {
     public class PathFinder
     {
