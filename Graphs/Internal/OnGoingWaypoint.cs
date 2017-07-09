@@ -1,19 +1,19 @@
-﻿namespace Graphs.Domain
+﻿using Graphs.Domain;
+
+namespace Graphs.Internal
 {
-    public class TempWaypoint : Waypoint
+    internal class OnGoingWaypoint : Waypoint
     {
-        public TempWaypoint(Waypoint waypoint) : base(waypoint.Name)
+        public OnGoingWaypoint(Waypoint waypoint) : base(waypoint.Name)
         {
-            Weight = -1;
-            Best = null;
-            Closed = false;
+            Refresh();
         }
 
         public double Weight { get; private set; }
-        public TempWaypoint Best { get; private set; }
+        public OnGoingWaypoint Best { get; private set; }
         public bool Closed { get; private set; }
 
-        public void SetBestNeighbor(TempWaypoint point, double weight)
+        public void SetBestNeighbor(OnGoingWaypoint point, double weight)
         {
             Weight = weight;
             Best = point;

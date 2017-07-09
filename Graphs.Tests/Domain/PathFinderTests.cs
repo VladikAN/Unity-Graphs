@@ -1,12 +1,11 @@
 ﻿using Graphs.Domain;
-using NUnit.Framework;
+using Xunit;
 
-namespace Graphs.Tests
+namespace Graphs.Tests.Domain
 {
-    [TestFixture]
     public class PathFinderTests
     {
-        [Test]
+        [Fact]
         public void Find_ValidGraph_FondedWay()
         {
             var A = new Waypoint("A");
@@ -23,14 +22,14 @@ namespace Graphs.Tests
             var finder = new PathFinder(connectors);
             var result = finder.Find(A, D);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(3, result.Length);
-            Assert.AreEqual(A, result[0]);
-            Assert.AreEqual(B, result[1]);
-            Assert.AreEqual(D, result[2]);
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Length);
+            Assert.Equal(A, result[0]);
+            Assert.Equal(B, result[1]);
+            Assert.Equal(D, result[2]);
         }
 
-        [Test]
+        [Fact]
         public void Find_RunMultipleTimes_SameResult()
         {
             var A = new Waypoint("A");
@@ -46,12 +45,12 @@ namespace Graphs.Tests
             var result2 = finder.Find(A, C);
             var result3 = finder.Find(A, C);
 
-            Assert.IsNotNull(result1);
-            Assert.AreEqual(result1, result2);
-            Assert.AreEqual(result2, result3);
+            Assert.NotNull(result1);
+            Assert.Equal(result1, result2);
+            Assert.Equal(result2, result3);
         }
 
-        [Test]
+        [Fact]
         public void Find_PathBlocked_NullResult()
         {
             var A = new Waypoint("A");
@@ -65,10 +64,10 @@ namespace Graphs.Tests
             var finder = new PathFinder(connectors);
             var result = finder.Find(A, C);
 
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        [Test]
+        [Fact]
         public void Update_NewConnectors_Updated()
         {
             var A = new Waypoint("A");
@@ -78,15 +77,15 @@ namespace Graphs.Tests
             var B_C = new Connector(B, C, 2);
 
             var finder = new PathFinder(new[] { A_B });
-            finder.Update(new[] { A_B, B_C });
+            finder.InitOrUpdate(new[] { A_B, B_C });
 
             var result = finder.Find(A, C);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(3, result.Length);
-            Assert.AreEqual(A, result[0]);
-            Assert.AreEqual(B, result[1]);
-            Assert.AreEqual(C, result[2]);
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Length);
+            Assert.Equal(A, result[0]);
+            Assert.Equal(B, result[1]);
+            Assert.Equal(C, result[2]);
         }
     }
 }
