@@ -13,7 +13,7 @@ namespace Graphs.Domain
 
             if (weight < 0)
             {
-                throw new Exception("Only positive weight supported");
+                throw new Exception($"Only positive weight supported, please update '{pointA.Name}' to '{pointB.Name}'");
             }
 
             PointA = pointA;
