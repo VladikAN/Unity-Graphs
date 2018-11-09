@@ -2,4 +2,6 @@
 
 One of researching activities about sharing CSharp code for future use inside of Unity.
 
+Code will look for optimized way through graph.
+
 Use only for personal self-education.
